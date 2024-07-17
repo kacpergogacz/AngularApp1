@@ -1,0 +1,26 @@
+<h2>Lista Kontaktów</h2>
+
+<button (click)="navigateToAddContact()">Dodaj Kontakt</button>
+
+<table>
+  <thead>
+    <tr>
+      <th>Imię</th>
+      <th>Nazwisko</th>
+      <th>Email</th>
+      <th>Numer Telefonu</th>
+      <th>ZObacz Szczegóły</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let contact of contacts">
+      <td>{{ contact.firstName }}</td>
+      <td>{{ contact.lastName }}</td>
+      <td>{{ contact.email }}</td>
+      <td>{{ contact.phoneNumber }}</td>
+      <td>
+        <a [routerLink]="['/contacts', contact.contactID]">Szczegóły</a>
+      </td>
+    </tr>
+  </tbody>
+</table>

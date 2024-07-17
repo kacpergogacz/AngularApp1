@@ -1,0 +1,13 @@
+<h2>Szczegóły Kontaktu</h2>
+<div *ngIf="contact">
+  <p>Imię: <input [(ngModel)]="contact.firstName"></p>
+  <p>Nazwisko: <input [(ngModel)]="contact.lastName"></p>
+  <p>Email: <input [(ngModel)]="contact.email"></p>
+  <p>Kategoria: <input [(ngModel)]="contact.category"></p>
+  <p>Podkategoria: <input [(ngModel)]="contact.subCategory"></p>
+  <p>Numer telefonu: <input [(ngModel)]="contact.phoneNumber"></p>
+  <p>Data urodzenia: <input type="date" [(ngModel)]="contact.birthDate"></p>
+
+  <button (click)="saveChanges()">Zapisz zmiany</button>
+  <button (click)="deleteContact()">Usuń kontakt</button>
+</div>

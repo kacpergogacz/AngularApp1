@@ -1,0 +1,12 @@
+<h2>Dodawanie nowego kontaktu</h2>
+<form (ngSubmit)="createContact()">
+  <p>Imię: <input [(ngModel)]="contactDto.firstName" name="firstName"></p>
+  <p>Nazwisko: <input [(ngModel)]="contactDto.lastName" name="lastName"></p>
+  <p>Email: <input [(ngModel)]="contactDto.email" name="email"></p>
+  <p>Kategoria: <input [(ngModel)]="contactDto.category" name="category"></p>
+  <p>Podkategoria: <input [(ngModel)]="contactDto.subCategory" name="subCategory"></p>
+  <p>Numer telefonu: <input [(ngModel)]="contactDto.phoneNumber" name="phoneNumber"></p>
+  <p>Data urodzenia: <input type="date" [(ngModel)]="contactDto.birthDate" name="birthDate"></p>
+
+  <button type="submit">Dodaj kontakt</button>
+</form>
