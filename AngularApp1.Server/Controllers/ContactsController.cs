@@ -19,6 +19,7 @@ namespace AngularApp1.Server.Controllers
         }
         
         [HttpGet]
+        // Pobieranie listy kontaktów ContactDTO
         public async Task<ActionResult<IEnumerable<ContactDTO>>> GetContacts()
         {
             var contacts = await _contactDbContext.ContactDetails
@@ -39,6 +40,7 @@ namespace AngularApp1.Server.Controllers
         }
         // get api/<valuescontroller>/5
         [HttpGet("{id}")]
+        // pobieranie pojedynczego kontaktu po ID ContactDTO
         public async Task<ActionResult<ContactDTO>> GetContactById(int id)
         {
             var contact = await _contactDbContext.ContactDetails.FindAsync(id);
@@ -64,6 +66,7 @@ namespace AngularApp1.Server.Controllers
         }
 
         [HttpPost]
+        //tworzenia nowego kontaktu CreateContactRequestDto
         public async Task<ActionResult<ContactDTO>> PostContact(CreateContactRequestDto contactDto)
         {
             var contact = new ContactDetails
@@ -87,6 +90,7 @@ namespace AngularApp1.Server.Controllers
 
         // PUT: api/Contacts/{id}
         [HttpPut("{id}")]
+        //aktualizacja kontaktu ContactDTO
         public async Task<IActionResult> PutContact(int id, ContactDTO contactDto)
         {
             var contact = _contactDbContext.ContactDetails.FirstOrDefault(x => x.ContactID == id);
@@ -112,6 +116,7 @@ namespace AngularApp1.Server.Controllers
 
         // DELETE: api/Contacts/{id}
         [HttpDelete("{id}")]
+        //usuwanie kontaktu przez ID
         public async Task<IActionResult> DeleteContact(int id)
         {
             var contact = await _contactDbContext.ContactDetails.FindAsync(id);

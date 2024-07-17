@@ -9,7 +9,7 @@ import { ContactDTO } from '../models/contact';
 })
 export class ContactService {
 
-  private apiUrl = environment.apiBaseUrl + '/contacts';
+  private apiUrl = environment.apiBaseUrl + '/Contacts';
 
   constructor(private http: HttpClient) { }
 

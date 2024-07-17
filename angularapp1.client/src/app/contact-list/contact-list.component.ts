@@ -14,7 +14,7 @@ export class ContactsListComponent implements OnInit {
 
   constructor(
     private contactService: ContactService,
-    private router: Router // Dodaj Router do konstruktora
+    private router: Router 
   ) { }
 
   ngOnInit(): void {
@@ -33,6 +33,6 @@ export class ContactsListComponent implements OnInit {
   }
 
   navigateToAddContact() {
-    this.router.navigate(['/contacts/add']); // Sprawdź, czy ta metoda jest poprawnie zadeklarowana i dostępna
+    this.router.navigate(['/contacts/add']); 
   }
 }

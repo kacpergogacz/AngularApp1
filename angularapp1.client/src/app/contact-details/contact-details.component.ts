@@ -61,7 +61,7 @@ export class ContactDetailsComponent implements OnInit {
     this.contactService.deleteContact(this.contact.contactID).subscribe(
       () => {
         console.log('Contact deleted successfully.');
-        this.location.back(); // Powrót do poprzedniej strony
+        this.location.back(); // powrót
       },
       error => {
         console.error('Error deleting contact:', error);

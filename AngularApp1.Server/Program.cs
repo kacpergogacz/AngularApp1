@@ -1,17 +1,39 @@
 using AngularApp1.Server.Data;
+using AngularApp1.Server.Models;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
+using Microsoft.AspNetCore.Identity; 
+
 
 var builder = WebApplication.CreateBuilder(args);
+var configuration = builder.Configuration;
 
-// Add services to the container.
-
-builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
-
+// Konfiguracja bazy danych
 builder.Services.AddDbContext<ContactDbContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("ContactDbConnectionString")));
+    options.UseSqlServer(configuration.GetConnectionString("ContactDbConnectionString")));
+
+// Konfiguracja Identity
+builder.Services.AddIdentity<ApplicationUser, IdentityRole>()
+    .AddEntityFrameworkStores<ContactDbContext>()
+    .AddDefaultTokenProviders();
+
+// Konfiguracja uwierzytelniania JWT
+var key = Encoding.ASCII.GetBytes(configuration["ApplicationSettings:JWT_Secret"]);
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+    .AddJwtBearer(options =>
+    {
+        options.TokenValidationParameters = new TokenValidationParameters
+        {
+            ValidateIssuer = false,
+            ValidateAudience = false,
+            ValidateLifetime = true,
+            ValidateIssuerSigningKey = true,
+            IssuerSigningKey = new SymmetricSecurityKey(key),
+        };
+    });
+
 
 builder.Services.AddCors(options =>
 {
@@ -24,12 +46,13 @@ builder.Services.AddCors(options =>
         });
 });
 
+// Dodatkowa konfiguracja
+builder.Services.AddControllers();
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen();
+
 var app = builder.Build();
 
-app.UseDefaultFiles();
-app.UseStaticFiles();
-
-// Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
@@ -38,12 +61,12 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
-app.UseCors("AllowAllOrigins");
-
+app.UseAuthentication();
 app.UseAuthorization();
 
-app.MapControllers();
+app.UseCors("AllowAllOrigins");
 
-app.MapFallbackToFile("/index.html");
+app.MapControllers();
+app.MapSwagger();
 
 app.Run();
